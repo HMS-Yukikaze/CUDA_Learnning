@@ -1,0 +1,7 @@
+## 项目用到的辅助模块文件夹。
+可以放置你所有 Find*.cmake 的文件。 
+你可以在 github.com/CLIUtils/cmake 找到一些常见的辅助模块集合。  
+你可以通过以下语句将此目录添加到你的 CMake Path 中：  
+```
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})  
+```
