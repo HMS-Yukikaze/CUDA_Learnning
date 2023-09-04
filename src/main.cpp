@@ -1,50 +1,33 @@
 #include <cuda_runtime_api.h>
 #include <iostream>
+#include <thread>
+#include <vector>
+#include <mutex>
+#include <condition_variable>
 #include "cuda_utils.h"
 #include "preprocess.h"
-#include <opencv2/cudawarping.hpp>
-
-void GetCudaVersion();
+#include "opencv2/opencv.hpp"
 
 
-int main(void) {
-	GetCudaVersion();
+static constexpr int kMaxInputImageSize = 1920 * 1080;
+std::vector<cv::Mat> imgLists;
 
-	cudaSetDevice(0);
+int main(void)
+{
+	//◊º±∏≤‚ ‘ ”∆µ
+	std::string rtsp1 = "E:\\WorkSpace\\C++\\rtsp-cuda\\x64\\Release\\Cloth\\Cloth.mp4";
+	std::string rtsp2 = "E:\\WorkSpace\\C++\\rtsp-cuda\\x64\\Release\\Cloth\\Clothbei.mp4";
 
-	auto imgSize = BATCH_SIZE * INPUT_H * INPUT_W;
-	auto dst = new float[2];
 
-	cuda_preprocess_init(imgSize);
-	std::vector<cv::Mat> arrays;
-	//read img 
-	cv::Mat pic = cv::imread("./resource/test.jpg");
-	arrays.push_back(pic);
+	std::vector<std::string> rtspList = { rtsp1,rtsp2 };//store the whole rtsp address
+	// Deserialize the engine from file
 
-	cudaStream_t stream = nullptr;
-	cudaStreamCreate(&stream);
-	assert(stream != nullptr);
 
-	//preprocess cols/width rows/height
-	cuda_batch_preprocess(arrays, dst, INPUT_W, INPUT_H, stream);
-	//cuda_preprocess(pic.data, pic.cols, pic.rows, dst, INPUT_W, INPUT_H, stream);
-
-	//release
-	cuda_preprocess_destroy();
-	cudaStreamDestroy(stream);
-	delete[] dst;
 	return 0;
 }
 
-void GetCudaVersion() {
-	int driver_version = 0, runtime_version = 0;
 
-	cudaDriverGetVersion(&driver_version);
-	cudaRuntimeGetVersion(&runtime_version);
 
-	std::cout << "Driver Version:" << driver_version << std::endl;
-	std::cout << "Runtime Version: " << runtime_version << std::endl;
-}
 
 
 

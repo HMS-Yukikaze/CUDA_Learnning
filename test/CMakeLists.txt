@@ -1,20 +1,19 @@
+enable_testing()
+SET(CMAKE_TOOLCHAIN_FILE "D:/vcpkg/scripts/buildsystems/vcpkg.cmake")
 
-find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+# Find Google Test package
+find_package(GTest REQUIRED)
+include_directories(
+    ${GTEST_INCLUDE_DIRS}
+    )
 
-include_directories(${Boost_INCLUDE_DIRS})
-
-add_executable(mtest test.cpp)
-
-#指定项目头文件路径
-target_include_directories(mtest PRIVATE
-    $ENV{Opencv_Cuda}/include
+set(TEST_SOURCES
+    kernels.cu
+    test.cpp
 )
 
-#指定项目依赖库路径
-target_link_libraries(mtest 
-                    ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
-                    $ENV{Opencv_Cuda}/x64/vc16/lib/opencv_core470d.lib
-                    $ENV{Opencv_Cuda}/x64/vc16/lib/opencv_imgproc470d.lib
-                    $ENV{Opencv_Cuda}/x64/vc16/lib/opencv_imgcodecs470d.lib
-                    $ENV{Opencv_Cuda}/x64/vc16/lib/opencv_cudawarping470d.lib
-                    )
+# Add the test executable
+add_executable(mTest ${TEST_SOURCES})
+
+#Link Google Test and CUDA libraries
+target_link_libraries(mTest PRIVATE GTest::GTest cudart)

@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.1)
 
-SET(CMAKE_TOOLCHAIN_FILE "D:/1_workSpace/vcpkg/scripts/buildsystems/vcpkg.cmake")
+SET(CMAKE_TOOLCHAIN_FILE "D:/vcpkg/scripts/buildsystems/vcpkg.cmake")
+SET(OpenCVRoot E:/WorkSpace/C++/3rd/opencv/opencv3.4.5)
+SET(TsrtRoot E:/WorkSpace/C++/3rd/TensorRT-8.6.1.6)
+
 
 project(OpenCV_CUDA LANGUAGES CXX CUDA)
 
@@ -29,6 +32,8 @@ message("Opencv_Cuda: $ENV{Opencv_Cuda}")
   
 # Find packages go here.  
 
+
+
 file(GLOB_RECURSE ALL_SOURCES
     "${CMAKE_SOURCE_DIR}/include/*.h"
     "${CMAKE_SOURCE_DIR}/include/*.hpp"
@@ -50,18 +55,19 @@ add_executable(OpenCV_CUDA
 
 #指定项目头文件路径
 target_include_directories(OpenCV_CUDA PRIVATE
-    $ENV{Opencv_Cuda}/include
+    $ENV{BoostRootDir}
+    ${OpenCVRoot}/include
     ${CMAKE_SOURCE_DIR}/include
+    ${TsrtRoot}/include    
 )
 
 #指定项目依赖库路径
 target_link_libraries(OpenCV_CUDA PRIVATE
-    $ENV{Opencv_Cuda}/x64/vc16/lib/opencv_core470d.lib
-    $ENV{Opencv_Cuda}/x64/vc16/lib/opencv_imgproc470d.lib
-    $ENV{Opencv_Cuda}/x64/vc16/lib/opencv_imgcodecs470d.lib
+    $ENV{BoostRootDir}/stage/lib/*.lib
+    ${OpenCVRoot}/lib/opencv_world345d.lib
+    ${TsrtRoot}/lib/nvinfer.lib
+    ${TsrtRoot}/lib/nvinfer_plugin.lib
     cudart.lib
 )
 
-
-enable_testing()
 add_subdirectory(test)
