@@ -3,11 +3,14 @@ SET(CMAKE_TOOLCHAIN_FILE "D:/vcpkg/scripts/buildsystems/vcpkg.cmake")
 
 # Find Google Test package
 find_package(GTest REQUIRED)
+
+message("cmake_dir: ${CMAKE_SOURCE_DIR}")
+
 include_directories(
     ${GTEST_INCLUDE_DIRS}
     )
 
-set(TEST_SOURCES
+set(TEST_SOURCES    
     kernels.cu
     test.cpp
 )

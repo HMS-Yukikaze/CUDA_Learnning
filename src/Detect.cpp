@@ -29,6 +29,12 @@ int Detect::setVideos(std::vector<std::string>& videoArrays)
 	return 0;
 }
 
+int Detect::init(std::string& engine)
+{
+
+	return 0;
+}
+
 int Detect::capture_show(std::string& rtsp_address)
 {
 

@@ -17,13 +17,3 @@ main(int argc, char** argv)
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
-/*
-
- ┣ 📂src
- ┃ ┣ 📜main.cpp
- ┣ 📂test
- ┃ ┣ 📜CMakeLists.txt
- ┃ ┣ 📜kernels.cu
- ┃ ┣ 📜kernels.cuh
- ┃ ┗ 📜test.cpp
-*/

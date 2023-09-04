@@ -17,6 +17,8 @@ public:
 
 	int setVideos(std::vector<std::string>& videoArrays);
 
+	int init(std::string& engine);
+
 	int TasksRun();
 
 	//预处理线程
@@ -32,6 +34,7 @@ private:
 	int capture_show(std::string& rtsp_address);
 private:
 	int srcSize;
+	
 	std::vector<std::string> videos;
 	std::vector<std::thread> threads;
 	std::list<cv::Mat> imglist;
