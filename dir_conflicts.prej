@@ -1,0 +1,14 @@
+Trying to change property 'svn:ignore'
+but the property has already been locally changed to a different value.
+Local property value:
+.git
+.vscode
+build
+tracker.7z
+
+Incoming property value:
+.git
+.vscode
+CMakeLists.txt
+build
+

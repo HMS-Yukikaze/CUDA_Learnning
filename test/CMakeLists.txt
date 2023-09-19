@@ -4,7 +4,7 @@ SET(CMAKE_TOOLCHAIN_FILE "D:/vcpkg/scripts/buildsystems/vcpkg.cmake")
 # Find Google Test package
 find_package(GTest REQUIRED)
 
-message("cmake_dir: ${CMAKE_SOURCE_DIR}")
+message(STATUS: "test moudle gen start...")
 
 include_directories(
     ${GTEST_INCLUDE_DIRS}

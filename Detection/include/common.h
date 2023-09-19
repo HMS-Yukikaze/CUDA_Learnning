@@ -1,10 +1,12 @@
 #pragma once
 
+
+#include <opencv2/opencv.hpp>
+#include <sys/stat.h>
 #include "NvInfer.h"
 #include "cuda_fp16.h"
 #include "cuda_runtime_api.h"
-#include <opencv2/opencv.hpp>
-#include <sys/stat.h>
+#include "yololayer.h"
 
 
 class Logger : public nvinfer1::ILogger {
@@ -63,20 +65,20 @@ __inline__ size_t dataTypeToSize(nvinfer1::DataType dataType)
 }
 
 // get the string of a TensorRT shape need  tensorrt 8.6.1 support
-__inline__ std::string shapeToString(nvinfer1::Dims32 dim)
-{
-	std::string output("(");
-	if (dim.nbDims == 0)
-	{
-		return output + std::string(")");
-	}
-	for (int i = 0; i < dim.nbDims - 1; ++i)
-	{
-		output += std::to_string(dim.d[i]) + std::string(", ");
-	}
-	output += std::to_string(dim.d[dim.nbDims - 1]) + std::string(")");
-	return output;
-}
+//__inline__ std::string shapeToString(nvinfer1::Dims32 dim)
+//{
+//	std::string output("(");
+//	if (dim.nbDims == 0)
+//	{
+//		return output + std::string(")");
+//	}
+//	for (int i = 0; i < dim.nbDims - 1; ++i)
+//	{
+//		output += std::to_string(dim.d[i]) + std::string(", ");
+//	}
+//	output += std::to_string(dim.d[dim.nbDims - 1]) + std::string(")");
+//	return output;
+//}
 
 // get the string of a TensorRT data type
 __inline__ std::string dataTypeToString(nvinfer1::DataType dataType)
@@ -117,12 +119,12 @@ __inline__ std::string formatToString(nvinfer1::TensorFormat format)
 		return std::string("CHW32");
 	case nvinfer1::TensorFormat::kHWC:
 		return std::string("HWC  ");
-	case nvinfer1::TensorFormat::kDLA_LINEAR:
-		return std::string("DLINE");
-	case nvinfer1::TensorFormat::kDLA_HWC4:
-		return std::string("DHWC4");
-	case nvinfer1::TensorFormat::kHWC16:
-		return std::string("HWC16");
+	//case nvinfer1::TensorFormat::kDLA_LINEAR:
+	//	return std::string("DLINE");
+	//case nvinfer1::TensorFormat::kDLA_HWC4:
+	//	return std::string("DHWC4");
+	//case nvinfer1::TensorFormat::kHWC16:
+	//	return std::string("HWC16");
 	default:
 		return std::string("None ");
 	}
@@ -166,12 +168,17 @@ namespace det {
 
 	static constexpr int INPUT_H = 640;  // yolov5's input height and width must be divisible by 32.
 	static constexpr int INPUT_W = 640;
-
+	
 	static constexpr int LOCATIONS = 4;
 	static constexpr int MAX_OUTPUT_BBOX_COUNT = 1000;
 
+	static constexpr int MAX_IMAGE_INPUT_SIZE_THRESH = 3000;
+
 	static char INPUT_BLOB_NAME[] = "data";
 	static char OUTPUT_BLOB_NAME[] = "prob";
+
+	static constexpr float CONF_THRESH = 0.5;
+	static constexpr float NMS_THRESH  = 0.4;
 
 	struct Binding {
 		size_t         size = 1;

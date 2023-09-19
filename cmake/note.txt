@@ -5,3 +5,14 @@
 ```
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})  
 ```
+
+ProjectRoot/
+├── CMakeLists.txt
+├── src/
+│   ├── CMakeLists.txt
+│   ├── main.cpp
+├── Log/
+├── Log/include/
+├── Log/src/
+└── include/
+    ├── my_library.h

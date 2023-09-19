@@ -14,9 +14,5 @@
     }
 #endif  // CUDA_CHECK
 
-static constexpr int BATCH_SIZE=1;
-static constexpr int INPUT_H = 1920;  // yolov5's input height and width must be divisible by 32.
-static constexpr int INPUT_W = 1080;
-
 
 #endif  // TRTX_CUDA_UTILS_H_
